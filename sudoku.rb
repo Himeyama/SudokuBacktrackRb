@@ -15,6 +15,7 @@ class SudokuTable < Array
     # インスタンスメソッド
     def initialize
         @list = {}
+        @anime = false
         super Array.new(9){Array.new(9){0}}
     end
 
@@ -33,6 +34,7 @@ class SudokuTable < Array
             end
             puts
         end
+        Kernel.print "\e[9A\e[9D"
     end
     
     def play
@@ -103,6 +105,7 @@ class SudokuTable < Array
         @lidx = 0
 
         while @lidx < @list.size do
+            print if @anime
             if check? @lary[@lidx][0][0], @lary[@lidx][0][1], @lary[@lidx][1][@lpos[@lidx]]
                 self[@lary[@lidx][0][0]][@lary[@lidx][0][1]] = @lary[@lidx][1][@lpos[@lidx]]
                 @lidx += 1
@@ -114,6 +117,8 @@ class SudokuTable < Array
                 end
             end
         end
+        print
+        Kernel.print "\e[9B"
     end
 
     def backtrack
@@ -127,21 +132,8 @@ class SudokuTable < Array
         end
     end
 
-    attr_accessor :list, :lpos, :lidx
+    attr_writer :anime
 end
-
-# table = [
-#     [1, 0, 0, 0, 0, 3, 0, 0, 0],
-#     [0, 4, 0, 9, 6, 0, 0, 0, 0],
-#     [6, 0, 0, 0, 0, 0, 8, 0, 0],
-#     [0, 0, 0, 8, 0, 6, 0, 0, 4],
-#     [0, 0, 2, 0, 0, 0, 0, 1, 0],
-#     [0, 0, 5, 0, 0, 7, 0, 3, 0],
-#     [0, 5, 0, 1, 7, 0, 0, 0, 0],
-#     [0, 0, 9, 0, 0, 0, 0, 7, 0],
-#     [0, 0, 0, 0, 0, 0, 3, 0, 2]
-# ]
-# s = SudokuTable[*table]
 
 s = SudokuTable.str "\
 100003000
@@ -154,5 +146,5 @@ s = SudokuTable.str "\
 009000070
 000000302"
 
+s.anime = true
 s.run
-s.print
