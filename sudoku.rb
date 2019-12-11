@@ -1,4 +1,12 @@
 class SudokuTable < Array
+    # 特異メソッド
+    def self.[] *table
+        s = SudokuTable.new
+        s.table = table
+        s
+    end
+
+    # インスタンスメソッド
     def initialize
         @list = {}
         super Array.new(9){Array.new(9){0}}
@@ -116,7 +124,6 @@ class SudokuTable < Array
     attr_accessor :list, :lpos, :lidx
 end
 
-s = SudokuTable.new
 table = [
     [1, 0, 0, 0, 0, 3, 0, 0, 0],
     [0, 4, 0, 9, 6, 0, 0, 0, 0],
@@ -128,6 +135,6 @@ table = [
     [0, 0, 9, 0, 0, 0, 0, 7, 0],
     [0, 0, 0, 0, 0, 0, 3, 0, 2]
 ]
-s.table = table
+s = SudokuTable[*table]
 s.run
 s.print
