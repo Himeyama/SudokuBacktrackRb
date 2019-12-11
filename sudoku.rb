@@ -6,6 +6,12 @@ class SudokuTable < Array
         s
     end
 
+    def self.str str
+        s = SudokuTable.new
+        s.table = str.each_line.to_a.map{|e| e.chomp.split("").map(&:to_i)}
+        s
+    end
+
     # インスタンスメソッド
     def initialize
         @list = {}
@@ -89,8 +95,8 @@ class SudokuTable < Array
             @old_list = @list.clone
             play
             opt
-            print
-            p @list
+            # print
+            # p @list
         end
         @lpos = Array.new(@list.size){0}
         @lary = @list.to_a
@@ -124,17 +130,29 @@ class SudokuTable < Array
     attr_accessor :list, :lpos, :lidx
 end
 
-table = [
-    [1, 0, 0, 0, 0, 3, 0, 0, 0],
-    [0, 4, 0, 9, 6, 0, 0, 0, 0],
-    [6, 0, 0, 0, 0, 0, 8, 0, 0],
-    [0, 0, 0, 8, 0, 6, 0, 0, 4],
-    [0, 0, 2, 0, 0, 0, 0, 1, 0],
-    [0, 0, 5, 0, 0, 7, 0, 3, 0],
-    [0, 5, 0, 1, 7, 0, 0, 0, 0],
-    [0, 0, 9, 0, 0, 0, 0, 7, 0],
-    [0, 0, 0, 0, 0, 0, 3, 0, 2]
-]
-s = SudokuTable[*table]
+# table = [
+#     [1, 0, 0, 0, 0, 3, 0, 0, 0],
+#     [0, 4, 0, 9, 6, 0, 0, 0, 0],
+#     [6, 0, 0, 0, 0, 0, 8, 0, 0],
+#     [0, 0, 0, 8, 0, 6, 0, 0, 4],
+#     [0, 0, 2, 0, 0, 0, 0, 1, 0],
+#     [0, 0, 5, 0, 0, 7, 0, 3, 0],
+#     [0, 5, 0, 1, 7, 0, 0, 0, 0],
+#     [0, 0, 9, 0, 0, 0, 0, 7, 0],
+#     [0, 0, 0, 0, 0, 0, 3, 0, 2]
+# ]
+# s = SudokuTable[*table]
+
+s = SudokuTable.str "\
+100003000
+040960000
+600000800
+000806004
+002000010
+005007030
+050170000
+009000070
+000000302"
+
 s.run
 s.print
