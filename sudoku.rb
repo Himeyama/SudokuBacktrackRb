@@ -3,12 +3,14 @@ class SudokuTable < Array
     def self.[] *table
         s = SudokuTable.new
         s.table = table
+        s.existNumber
         s
     end
 
     def self.str str
         s = SudokuTable.new
         s.table = str.each_line.to_a.map{|e| e.chomp.split("").map(&:to_i)}
+        s.existNumber
         s
     end
 
@@ -17,6 +19,7 @@ class SudokuTable < Array
         @list = {}
         @anime = false
         super Array.new(9){Array.new(9){0}}
+        existNumber
     end
 
     def table= ary
@@ -27,10 +30,33 @@ class SudokuTable < Array
         end
     end
 
+    def existNumber
+        @existNum = Array.new(9){Array.new(9){0}}
+        9.times do |i|
+            9.times do |j|
+                @existNum[i][j] = (self[i][j] == 0 ? false : true)
+            end
+        end
+    end
+
+    # def print
+    #     self.map do |rows|
+    #         rows.map do |e|
+    #             Kernel.print "#{"%2d" % e}"
+    #         end
+    #         puts
+    #     end
+    #     Kernel.print "\e[9A\e[9D"
+    # end
+
     def print
-        self.map do |rows|
-            rows.map do |e|
-                Kernel.print "#{"%2d" % e}"
+        9.times do |i|
+            9.times do |j|
+                if @existNum[i][j]
+                    Kernel.print "#{"%2d" % self[i][j]}"
+                else
+                    Kernel.print "\e[7m#{self[i][j] == 0 ? "  " : ("%2d" % self[i][j])}\e[0m"
+                end
             end
             puts
         end
@@ -133,6 +159,7 @@ class SudokuTable < Array
     end
 
     attr_writer :anime
+    # attr_accessor :existNum
 end
 
 s = SudokuTable.str "\
