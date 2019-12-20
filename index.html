@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>數獨計算器</title>
+    <meta charset=utf-8>
+    <link rel="stylesheet" href="./sudoku.css">
+    <script type="text/javascript" src="./jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="./solver.js"></script>
+</head>
+
+<body>
+    <h1>數獨計算器</h1>
+    <table>
+        <script>
+            for(i = 0; i < 9; i++){
+                document.write("<tr>")
+                for(j = 0; j < 9; j++){
+                    document.write(`\
+                    <td>\
+                    <select id=\"p${i}${j}\">\
+                        <option value=\"n\"></option>\
+                        <option value=\"1\">1</option>\
+                        <option value=\"2\">2</option>\
+                        <option value=\"3\">3</option>\
+                        <option value=\"4\">4</option>\
+                        <option value=\"5\">5</option>\
+                        <option value=\"6\">6</option>\
+                        <option value=\"7\">7</option>\
+                        <option value=\"8\">8</option>\
+                        <option value=\"9\">9</option>\
+                    </select>
+                    </td>`);
+                }
+                document.write("</tr>")
+            }
+        </script>
+    </table>
+    
+    <div class="btn">
+        <button id="run">計算</button>
+        <button id="clear">消去</button>
+    </div>
+</body>
+
+</html>
