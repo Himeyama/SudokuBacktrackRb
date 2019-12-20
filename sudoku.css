@@ -1,0 +1,46 @@
+select {
+    height: 48px;
+    width: 48px;
+    background: none;
+    text-align: center;
+    border: none;
+    font-size: 1.2em;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    -moz-appearance: none;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+td {
+    border:solid 4px #eee;
+}
+
+button {
+    margin-top: 24px;
+    font-size: 1.6em;
+    background: #eee;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 16px 8px;
+}
+
+h1 {
+    font-family: serif;
+    text-align: center;
+}
+
+table {
+    margin: 0 auto;
+}
+
+.btn{
+    display: table;
+    margin: 0 auto;
+}

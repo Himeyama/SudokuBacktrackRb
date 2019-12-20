@@ -39,16 +39,6 @@ class SudokuTable < Array
         end
     end
 
-    # def print
-    #     self.map do |rows|
-    #         rows.map do |e|
-    #             Kernel.print "#{"%2d" % e}"
-    #         end
-    #         puts
-    #     end
-    #     Kernel.print "\e[9A\e[9D"
-    # end
-
     def print
         9.times do |i|
             9.times do |j|
@@ -123,8 +113,6 @@ class SudokuTable < Array
             @old_list = @list.clone
             play
             opt
-            # print
-            # p @list
         end
         @lpos = Array.new(@list.size){0}
         @lary = @list.to_a
@@ -158,20 +146,120 @@ class SudokuTable < Array
         end
     end
 
+    def func1 xg, yg
+        b = xg * 3, yg * 3
+        e = xg * 3 + 2, yg * 3 + 2
+        ary = []
+        play
+        (b[0]..e[0]).each do |i|
+            (b[1]..e[1]).each do |j|
+                ary << @list[[i, j]] if @list[[i, j]]
+            end
+        end
+        ary_h = ary.flatten.uniq.map{|e| [e, ary.flatten.count(e)]}.to_h
+        ary_k = ary_h.keys
+        ary_v = ary_h.values
+        ary_v.each.with_index do |v, i|
+            if v == 1
+                num = ary_k[i] # 5
+                (b[0]..e[0]).each do |i|
+                    (b[1]..e[1]).each do |j|
+                        if @list[[i, j]]&.include? num
+                            puts "(#{i}, #{j}) = #{num}"
+                            @list.delete([i, j])
+                            self[i][j] = num
+                            old_list = nil
+                            while old_list != @list
+                                f = false
+                                old_list = @list.clone
+                                play
+                                opt
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    def func2 x
+        ary = []
+        play
+        (0..9).each do |j|
+            ary << @list[[x, j]] if @list[[x, j]]
+        end
+        ary_h = ary.flatten.uniq.map{|e| [e, ary.flatten.count(e)]}.to_h
+        ary_k = ary_h.keys
+        ary_v = ary_h.values
+        ary_v.each.with_index do |v, i|
+            if v == 1
+                num = ary_k[i] # 5
+                (b[0]..e[0]).each do |i|
+                    (b[1]..e[1]).each do |j|
+                        if @list[[i, j]]&.include? num
+                            puts "(#{i}, #{j}) = #{num}"
+                            @list.delete([i, j])
+                            self[i][j] = num
+                            old_list = nil
+                            while old_list != @list
+                                f = false
+                                old_list = @list.clone
+                                play
+                                opt
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    def func3 y
+        ary = []
+        play
+        (0..9).each do |i|
+            ary << @list[[i, y]] if @list[[i, y]]
+        end
+        ary_h = ary.flatten.uniq.map{|e| [e, ary.flatten.count(e)]}.to_h
+        ary_k = ary_h.keys
+        ary_v = ary_h.values
+        ary_v.each.with_index do |v, i|
+            if v == 1
+                num = ary_k[i] # 5
+                (b[0]..e[0]).each do |i|
+                    (b[1]..e[1]).each do |j|
+                        if @list[[i, j]]&.include? num
+                            puts "(#{i}, #{j}) = #{num}"
+                            @list.delete([i, j])
+                            self[i][j] = num
+                            old_list = nil
+                            while old_list != @list
+                                f = false
+                                old_list = @list.clone
+                                play
+                                opt
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
     attr_writer :anime
-    # attr_accessor :existNum
+    attr_accessor :list
 end
 
 s = SudokuTable.str "\
-100003000
-040960000
-600000800
-000806004
-002000010
-005007030
-050170000
-009000070
-000000302"
+000020900
+028100000
+000500024
+360000100
+700001345
+840000200
+000300061
+036800000
+000010500"
 
 s.anime = true
 s.run
